@@ -83,13 +83,6 @@ class CodecsSpec extends AnyFlatSpec with Matchers {
     )
   }
 
-  "student" should "be parsed as person if there is no codec for student in scope" in {
-    case class StudentTest(name: String, age: Int, university: University) extends Person
-    StudentTest("Max", 21, University("Inno", "Inno", "Russia", 214)).toJson shouldEqual JsonObject(
-      Map("name" -> JsonString("Max"), "age" -> JsonInt(21))
-    )
-  }
-
   "student" should "be pretty printed using Show instance" in {
     val studentJson = Student("Max", 21, University("Inno", "Inno", "Russia", 214)).toJson
     studentJson.show shouldEqual
@@ -99,6 +92,7 @@ class CodecsSpec extends AnyFlatSpec with Matchers {
          |  "university": {
          |    "name": "Inno",
          |    "city": "Inno",
+         |    "country": "Russia",
          |    "qsRank": 214
          |  }
          |}
@@ -152,7 +146,7 @@ class CodecsSpec extends AnyFlatSpec with Matchers {
     val errors = List(
       WrongType("age"),
       AbsentField("salary"),
-      AbsentField("employees, 0: age")
+      AbsentField("age")
     ) // You can implement your own error adt, just change test to show it in action
     JsonObject(
       Map(
