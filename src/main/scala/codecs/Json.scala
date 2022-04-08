@@ -12,6 +12,6 @@ object Json {
   final case class JsonObject(value: Map[String, Json]) extends Json
 
   implicit val show: Show[Json] = new Show[Json] {
-    override def show(t: Json): String = ???
+    override def show(t: Json): String = "test"
   } // or just (t: Json) => ??? (called Single Abstract Method)
 }
